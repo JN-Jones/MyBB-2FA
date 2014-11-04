@@ -221,10 +221,12 @@ function mybb2fa_deactivate()
 
 function mybb2fa_usercp()
 {
-	global $db, $mybb, $headerinclude, $header, $usercpnav, $theme, $footer, $templates;
+	global $db, $mybb, $headerinclude, $header, $usercpnav, $theme, $footer, $templates, $lang;
 
 	if($mybb->input['action'] != "mybb2fa")
 	    return;
+
+	$lang->load("mybb2fa");
 
 	require_once MYBB_ROOT."inc/plugins/mybb2fa/GoogleAuthenticator.php";
 	require_once MYBB_ROOT."inc/plugins/mybb2fa/AuthWrapper.php";
@@ -245,7 +247,7 @@ function mybb2fa_usercp()
 			$mybb->user['secret'] = $secret;
 			$db->update_query("users", array("secret" => $secret), "uid={$mybb->user['uid']}");
 			// Redirect to avoid multiple different secrets
-			redirect("usercp.php?action=mybb2fa", "Redirect");
+			redirect("usercp.php?action=mybb2fa", $lang->mybb2fa_activated);
 		}
 	}
 
@@ -265,7 +267,7 @@ function mybb2fa_usercp()
 
 function mybb2fa_do_login($loginhandler)
 {
-	global $mybb, $db, $headerinclude, $header, $theme, $footer, $templates;
+	global $mybb, $db, $headerinclude, $header, $theme, $footer, $templates, $lang;
 
 	// Ok, everything is ok so far; let's figure out whether we need to show our form
 	$query = $db->simple_select("users", "secret", "uid={$loginhandler->login_data['uid']}");
@@ -273,6 +275,8 @@ function mybb2fa_do_login($loginhandler)
 	if(empty($secret))
 	    // User doesn't use the plugin, nothing to do
 		return;
+
+	$lang->load("mybb2fa");
 
 	// Though the user is logged in we want to block him till he really logs in
 	$db->update_query("sessions", array("mybb2fa_block" => 1), "sid='".$db->escape_string($mybb->cookies['sid'])."'");
@@ -298,7 +302,7 @@ function mybb2fa_check_block()
 
 function mybb2fa_check()
 {
-	global $mybb, $db;
+	global $mybb, $db, $lang;
 
 	if($mybb->input['action'] != "mybb2fa")
 	    return;
@@ -313,6 +317,8 @@ function mybb2fa_check()
 	if(empty($secret))
 		return;
 
+	$lang->load("mybb2fa");
+
 	require_once MYBB_ROOT."inc/plugins/mybb2fa/GoogleAuthenticator.php";
 	require_once MYBB_ROOT."inc/plugins/mybb2fa/AuthWrapper.php";
 	$auth = new Authenticator;
@@ -325,14 +331,14 @@ function mybb2fa_check()
 	if($test === true)
 	{
 		// Correct code, unblock the user
-		redirect("index.php", "Logged in");
+		redirect("index.php", $lang->mybb2fa_loggedin);
 	}
 	else
 	{
 		// Sorry little guy, you failed; unset everything
 		my_unsetcookie("mybbuser");
 		my_unsetcookie("sid");
-		redirect("index.php", "Failed");
+		redirect("index.php", $lang->mybb2fa_failed);
 	}
 }
 
@@ -347,6 +353,8 @@ function mybb2fa_admin_do_login()
 	// We're logged in here, check whether our cookie is set
 	if(isset($admin_session['mybb2fa_auth']) && $admin_session['mybb2fa_auth'] == 1)
 	    return;
+
+	$lang->load("mybb2fa");
 
 	if($mybb->request_method == "post")
 	{
@@ -368,7 +376,7 @@ function mybb2fa_admin_do_login()
 			// Sorry little guy, you failed; logging you out
 			$db->delete_query("adminsessions", "sid='".$db->escape_string($mybb->cookies['adminsid'])."'");
 			my_unsetcookie('adminsid');
-			$page->show_login("You failed!", "error");
+			$page->show_login($lang->mybb2fa_failed, "error");
 		}
 	}
 
@@ -399,7 +407,7 @@ function mybb2fa_admin_do_login()
 		</div>
 	</div>
 	<div id="content">
-		<h2>MyBB 2FA</h2>
+		<h2>{$lang->mybb2fa}</h2>
 EOF;
 
 		// Make query string nice and pretty so that user can go to his/her preferred destination
@@ -415,11 +423,11 @@ EOF;
 		}
 
 		$mybb2fa_page .= <<<EOF
-		<p>Please enter the authentication</p>
+		<p>{$lang->mybb2fa_code}</p>
 		<form method="post" action="index.php{$query_string}">
 		<div class="form_container">
 
-			<div class="label"><label for="code">Authentication code</label></div>
+			<div class="label"><label for="code">{$lang->mybb2fa_label}</label></div>
 
 			<div class="field"><input type="text" name="code" id="code" class="text_input initial_focus" /></div>
 
