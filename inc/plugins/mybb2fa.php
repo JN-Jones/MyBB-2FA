@@ -42,7 +42,7 @@ function mybb2fa_install()
 	
 	$template = '<html>
 <head>
-<title>{$mybb->settings[\'bbname\']} - MyBB 2FA</title>
+<title>{$mybb->settings[\'bbname\']} - {$lang->mybb2fa}</title>
 {$headerinclude}
 </head>
 <body>
@@ -55,13 +55,13 @@ function mybb2fa_install()
 		<input type="hidden" name="uid" value="{$loginhandler->login_data[\'uid\']}" />
 		<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
 			<tr>
-				<td class="thead"><strong>MyBB 2FA</strong></td>
+				<td class="thead"><strong>{$lang->mybb2fa}</strong></td>
 			</tr>
 			<tr>
-				<td class="trow1">Please enter your Authentication Code: <input type="text" class="textbox" name="code" /></td>
+				<td class="trow1"{$lang->mybb2fa_code}: <input type="text" class="textbox" name="code" /></td>
 			</tr>
 			<tr>
-				<td class="trow2"><input type="submit" class="button" value="Check" /></td>
+				<td class="trow2"><input type="submit" class="button" value="{$lang->mybb2fa_check}" /></td>
 			</tr>
 		</table>
 		</form>
@@ -80,7 +80,7 @@ function mybb2fa_install()
 
 	$template = '<html>
 <head>
-<title>{$mybb->settings[\'bbname\']} - MyBB 2FA</title>
+<title>{$mybb->settings[\'bbname\']} - {$lang->mybb2fa}</title>
 {$headerinclude}
 </head>
 <body>
@@ -91,10 +91,10 @@ function mybb2fa_install()
 	<td valign="top">
 		<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
 			<tr>
-				<td class="thead"><strong>MyBB 2FA</strong></td>
+				<td class="thead"><strong>{$lang->mybb2fa}</strong></td>
 			</tr>
 			<tr>
-				<td class="trow">MyBB 2FA is activated atm. <a href="usercp.php?action=mybb2fa&do=deactivate">Deactivate</a></td>
+				<td class="trow">{$lang->mybb2fa_activated_desc} <a href="usercp.php?action=mybb2fa&do=deactivate">{$lang->deactivate}</a></td>
 			</tr>
           <tr>
             <td class="trow2"><img src="{$qr}" /></td>
@@ -115,7 +115,7 @@ function mybb2fa_install()
 
 	$template = '<html>
 <head>
-<title>{$mybb->settings[\'bbname\']} - MyBB 2FA</title>
+<title>{$mybb->settings[\'bbname\']} - {$lang->mybb2fa}</title>
 {$headerinclude}
 </head>
 <body>
@@ -126,10 +126,10 @@ function mybb2fa_install()
 	<td valign="top">
 		<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
 			<tr>
-				<td class="thead" colspan="2"><strong>MyBB 2FA</strong></td>
+				<td class="thead" colspan="2"><strong>{$lang->mybb2fa}</strong></td>
 			</tr>
 			<tr>
-				<td class="trow" colspan="2">MyBB 2FA is deactivated atm. <a href="usercp.php?action=mybb2fa&do=activate">Activate</a></td>
+				<td class="trow" colspan="2">{$lang->mybb2fa_deactivated_desc} <a href="usercp.php?action=mybb2fa&do=activate">{$lang->mybb2fa_activate}</a></td>
 			</tr>
 	</td>
 </tr>
