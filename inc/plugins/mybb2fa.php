@@ -22,7 +22,7 @@ function mybb2fa_info()
 		"authorsite"	=> "http://jonesboard.de/",
 		"version"		=> "1.0",
 		"compatibility" => "18*",
-		"codename"		=> "mybb2fa"
+		"codename"		=> "mybbfa"
 	);
 }
 
