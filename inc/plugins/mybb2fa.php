@@ -58,7 +58,7 @@ function mybb2fa_install()
 				<td class="thead"><strong>{$lang->mybb2fa}</strong></td>
 			</tr>
 			<tr>
-				<td class="trow1"{$lang->mybb2fa_code}: <input type="text" class="textbox" name="code" /></td>
+				<td class="trow1">{$lang->mybb2fa_code}: <input type="text" class="textbox" name="code" /></td>
 			</tr>
 			<tr>
 				<td class="trow2"><input type="submit" class="button" value="{$lang->mybb2fa_check}" /></td>
@@ -94,7 +94,7 @@ function mybb2fa_install()
 				<td class="thead"><strong>{$lang->mybb2fa}</strong></td>
 			</tr>
 			<tr>
-				<td class="trow">{$lang->mybb2fa_activated_desc} <a href="usercp.php?action=mybb2fa&do=deactivate">{$lang->deactivate}</a></td>
+				<td class="trow">{$lang->mybb2fa_activated_desc} <a href="usercp.php?action=mybb2fa&do=deactivate">{$lang->mybb2fa_deactivate}</a></td>
 			</tr>
           <tr>
             <td class="trow2"><img src="{$qr}" /></td>
